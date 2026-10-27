@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { MessagesSquare, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -58,20 +69,41 @@ export function FeedbackDetail({ item, onDelete, onStatusChange }: FeedbackDetai
               ))}
             </SelectContent>
           </Select>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-8"
-                aria-label="Delete feedback"
-                onClick={() => onDelete(item.id)}
-              >
-                <Trash2 />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Delete feedback</TooltipContent>
-          </Tooltip>
+          <AlertDialog key={item.id}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8"
+                    aria-label="Delete feedback"
+                  >
+                    <Trash2 />
+                  </Button>
+                </AlertDialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent>Delete feedback</TooltipContent>
+            </Tooltip>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete feedback?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will delete “{item.summary}”. This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel size="sm">Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => onDelete(item.id)}
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
